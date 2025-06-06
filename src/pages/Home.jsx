@@ -5,11 +5,36 @@ import nursing from '../assets/nursing.jpeg';
 import nonbenefit from '../assets/nonbenefit.jpeg'
 import intro1 from '../assets/intro1.jpeg'
 import Card from "../components/Card";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Home() {     
     const dataPolicy = data.policy;
     const dataIntro = data.intro;
     const dataNursing = data.nursing;
+
+    const [contents, setContents] = useState([]);
+    useEffect(()=> {
+        axios.get('/api/cheonanhbcare', {
+            headers: {
+                'Content-Type': 'application/xml',
+            },
+        }).then(response => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(response.data, "text/xml");
+            const items = xmlDoc.getElementsByTagName("item");
+            const articles = Array.from(items).map(item => ({
+                title: item.getElementsByTagName("title")[0].textContent,
+                link: item.getElementsByTagName("link")[0].textContent,
+                description: item.getElementsByTagName("description")[0].textContent,
+                pubDate: item.getElementsByTagName("pubDate")[0].textContent,
+            }));
+            console.log(articles);
+            setContents(articles.slice(0, 3)); // 최신 10개 기사만 표시
+        }).catch(error => {
+            console.error("There was an error fetching the article data!", error);
+        });
+    }, []);
     
   return (
     <Layout>
@@ -49,9 +74,15 @@ function Home() {
                     <span className="absolute left-0 -bottom-1 w-full h-px bg-green-700"></span>
                 </h3>
                 <div className='flex flex-wrap'>                                    
-                    <Card></Card>
-                    <Card></Card>
-                    <Card></Card>
+                    {contents.map((content, index) => (
+                        <Card 
+                            key={index}
+                            title={content.title}
+                            description={content.description}
+                            pubDate={content.pubDate}
+                            link={content.link}
+                        />
+                    ))}
                 </div>
                 
         </div>
