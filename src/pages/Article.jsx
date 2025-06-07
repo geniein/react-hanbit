@@ -39,7 +39,7 @@ function Article() {
                 description: item.getElementsByTagName("description")[0].textContent,
                 pubDate: item.getElementsByTagName("pubDate")[0].textContent,
             }));
-            console.log(articles);
+        
             setContents(articles.slice(0, 9)); // 최신 10개 기사만 표시
         }).catch(error => {
             console.error("There was an error fetching the article data!", error);
@@ -48,7 +48,6 @@ function Article() {
     }, []);
 
   return (
-    <Layout>
         <div>
             <div className="container mx-auto flex-col">
                 <div className="font-bold my-4 text-xl text-green-600">
@@ -68,7 +67,6 @@ function Article() {
                 
             </div>               
         </div>
-    </Layout>
   );
 }
 

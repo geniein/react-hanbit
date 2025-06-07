@@ -12,10 +12,10 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, '')
       },
-      '/cheonanhbcare': {
+      '/api/cheonanhbcare': {
         target: 'https://rss.blog.naver.com',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/rss/, '')
+        rewrite: path => path.replace(/^\/api/, '')
       }
     }
   }

@@ -39,7 +39,6 @@ function Map() {
     }, []);
 
   return (
-    <Layout>
         <div>
             <div className="container mx-auto flex-col">
                 <div className="font-bold my-4 text-xl text-green-600">
@@ -52,7 +51,6 @@ function Map() {
                 </div>
             </div>               
         </div>
-    </Layout>
   );
 }
 

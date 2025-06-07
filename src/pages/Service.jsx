@@ -14,7 +14,7 @@ function Serivce() {
         setPage(target);
     }
   return (
-    <Layout>
+    <div>
         <SubHeader>
             <div className="text-xl font-bold m-4" onClick={()=>onClickSubHeader("nursing")}>방문요양</div>          
             <div className="text-xl font-bold m-4" onClick={()=>onClickSubHeader("nonbenefit")}>비급여 서비스</div>          
@@ -30,7 +30,7 @@ function Serivce() {
 
             <Contact/>
         </div>
-    </Layout>
+    </div>
   );
 }
 

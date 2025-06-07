@@ -10,7 +10,7 @@ function Policy() {
     const dataPolicy = data.policy;
     const dataApplication = data.application;
   return (
-    <Layout>
+    <div>
         <SubHeader>
             <div className="text-xl font-bold m-4" onClick={()=>setPage("policy")}>장기요양보험제도</div>          
             <div className="text-xl font-bold m-4" onClick={()=>setPage("application")}>등급 신청</div>          
@@ -26,7 +26,7 @@ function Policy() {
 
             <Contact/>
         </div>
-    </Layout>
+    </div>
   );
 }
 
