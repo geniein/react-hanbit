@@ -4,7 +4,7 @@ import Intro from "./pages/Intro";
 import Policy from "./pages/Policy";
 import Service from "./pages/Service";
 import Article from "./pages/Article";
-import Map from "./pages/Map";
+import Direction from "./pages/Direction";
 import Layout from "./components/Layout";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
           <Route path="policy" element={<Policy />} />
           <Route path="service" element={<Service />} />
           <Route path="article" element={<Article />} />
-          <Route path="map" element={<Map />} />
+          <Route path="direction" element={<Direction />} />
         </Route>
       </Routes>
     </BrowserRouter>

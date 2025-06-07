@@ -12,8 +12,8 @@ function Policy() {
   return (
     <div>
         <SubHeader>
-            <div className="text-xl font-bold m-4" onClick={()=>setPage("policy")}>장기요양보험제도</div>          
-            <div className="text-xl font-bold m-4" onClick={()=>setPage("application")}>등급 신청</div>          
+            <div className={`text-xl font-bold m-4 ${page==="policy" ? "underline": ""}`} onClick={()=>setPage("policy")}>장기요양보험제도</div>          
+            <div className={`text-xl font-bold m-4 ${page==="application" ? "underline": ""}`} onClick={()=>setPage("application")}>등급 신청</div>          
         </SubHeader>
         <div>
             <h3 className="font-bold my-4 text-2xl inline-block; relative">

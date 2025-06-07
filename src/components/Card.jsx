@@ -1,7 +1,7 @@
 function Card({title, description, pubDate, link}) {
     return (     
         <div className="m-4">        
-            <div className="bg-gray-200 container flex-col flex-1/4 h-32 w-96 p-8 sm:h-72"> 
+            <div className="bg-gray-200 container flex-col flex-1/4 h-32 w-96 p-8 sm:h-72 align-center"> 
                 <a href={link} target="_blank" rel="noopener noreferrer" className="hover:underline">
                     <div className="truncate font-bold pb-2">{title}</div>
                     <div >

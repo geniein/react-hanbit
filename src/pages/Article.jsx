@@ -53,7 +53,7 @@ function Article() {
                 <div className="font-bold my-4 text-xl text-green-600">
                     ◎ Article
                 </div>
-                <div className='container flex flex-wrap'>       
+                <div className='container flex flex-wrap align-center justify-center'>       
                     {contents.map((content, index) => (
                         <Card 
                             key={index}

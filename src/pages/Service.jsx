@@ -16,8 +16,8 @@ function Serivce() {
   return (
     <div>
         <SubHeader>
-            <div className="text-xl font-bold m-4" onClick={()=>onClickSubHeader("nursing")}>방문요양</div>          
-            <div className="text-xl font-bold m-4" onClick={()=>onClickSubHeader("nonbenefit")}>비급여 서비스</div>          
+            <div className={`text-xl font-bold m-4 ${page==="nursing" ? "underline": ""}`} onClick={()=>onClickSubHeader("nursing")}>방문요양</div>          
+            <div className={`text-xl font-bold m-4 ${page==="nonbenefit" ? "underline": ""}`} onClick={()=>onClickSubHeader("nonbenefit")}>비급여 서비스</div>          
         </SubHeader>
         <div>
             <h3 className="font-bold my-4 text-2xl inline-block; relative">
