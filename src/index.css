@@ -1,19 +1,39 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
+
+@font-face {
+  font-family: "D2Coding";
+  src: url("https://cdn.jsdelivr.net/gh/Joungkyun/font-d2coding/D2Coding.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "D2Coding";
+  src: url("https://cdn.jsdelivr.net/gh/Joungkyun/font-d2coding/D2CodingBold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   color-scheme: light;
-  --page-bg: #f3f0e8;
-  --surface: rgba(255, 255, 255, 0.74);
-  --surface-strong: rgba(255, 255, 255, 0.92);
-  --surface-dark: #17342a;
-  --ink: #18241f;
-  --muted: #58685f;
-  --line: rgba(24, 36, 31, 0.08);
-  --brand: #295c48;
-  --brand-2: #d8a75b;
-  --shadow-soft: 0 18px 50px rgba(25, 44, 36, 0.08);
-  --shadow-strong: 0 24px 60px rgba(22, 40, 33, 0.16);
+  --page-bg: #ffffff;
+  --surface: rgba(255, 255, 255, 0.94);
+  --surface-strong: #ffffff;
+  --surface-soft: #eefaf2;
+  --surface-dark: #00b050;
+  --ink: #111827;
+  --muted: #4b5563;
+  --line: rgba(15, 23, 42, 0.08);
+  --brand: #03c75a;
+  --brand-strong: #008f3f;
+  --brand-soft: #e2faeb;
+  --brand-2: #6fdaa0;
+  --ink-inverse: #ffffff;
+  --shadow-soft: 0 18px 50px rgba(3, 199, 90, 0.12);
+  --shadow-strong: 0 24px 60px rgba(0, 143, 63, 0.26);
 }
 
 * {
@@ -28,9 +48,8 @@ body {
   margin: 0;
   min-width: 320px;
   background:
-    radial-gradient(circle at top left, rgba(216, 167, 91, 0.24), transparent 28%),
-    radial-gradient(circle at top right, rgba(41, 92, 72, 0.2), transparent 24%),
-    linear-gradient(180deg, #f7f4ed 0%, #f1eee7 48%, #ebe7df 100%);
+    radial-gradient(circle at top left, rgba(3, 199, 90, 0.14) 0%, transparent 22%),
+    linear-gradient(180deg, #ffffff 0%, #fbfefd 46%, #f2faf5 100%);
   color: var(--ink);
   font-family: "IBM Plex Sans KR", sans-serif;
 }
@@ -40,7 +59,7 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.24;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 1px);
@@ -65,20 +84,24 @@ select {
 }
 
 .font-display {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "D2Coding", "IBM Plex Sans KR", monospace;
+}
+
+.font-ui {
+  font-family: "D2Coding", "IBM Plex Sans KR", monospace;
 }
 
 .glass-panel {
   background: var(--surface);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(3, 199, 90, 0.16);
   box-shadow: var(--shadow-soft);
 }
 
 .section-shell {
-  border: 1px solid rgba(24, 36, 31, 0.08);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.68));
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.92));
   box-shadow: var(--shadow-soft);
 }
 
@@ -87,14 +110,14 @@ select {
   align-items: center;
   gap: 0.5rem;
   border-radius: 9999px;
-  border: 1px solid rgba(41, 92, 72, 0.14);
-  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(3, 199, 90, 0.28);
+  background: var(--brand-soft);
   padding: 0.45rem 0.9rem;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brand);
+  color: var(--brand-strong);
 }
 
 .section-kicker::before {
@@ -106,7 +129,7 @@ select {
 }
 
 .rich-copy {
-  color: #304038;
+  color: var(--muted);
   line-height: 1.9;
   white-space: pre-wrap;
   font-size: 0.98rem;
@@ -114,6 +137,47 @@ select {
 
 .rich-copy img {
   max-width: 100%;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.accent-panel {
+  border: 1px solid rgba(3, 199, 90, 0.16);
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: var(--shadow-soft);
+}
+
+.accent-kicker {
+  color: var(--brand-strong);
+}
+
+.accent-copy {
+  color: var(--muted);
+}
+
+@media (min-width: 640px) {
+  .accent-panel {
+    border: none;
+    background: linear-gradient(135deg, var(--surface-dark), var(--brand-strong));
+    color: var(--ink-inverse);
+    box-shadow: var(--shadow-strong);
+  }
+
+  .accent-kicker {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .accent-copy {
+    color: rgba(255, 255, 255, 0.7);
+  }
 }
 
 @media (max-width: 640px) {

@@ -1,9 +1,9 @@
 function Table({ head, body }) {
   return (
-    <div className="overflow-hidden rounded-[26px] border border-[#e5ddd0] bg-white shadow-[0_12px_34px_rgba(18,34,28,0.06)]">
+    <div className="overflow-hidden rounded-[26px] bg-white shadow-[0_12px_34px_rgba(18,34,28,0.06)]" style={{ border: "1px solid color-mix(in oklab, var(--brand) 18%, white)" }}>
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse">
-          <thead className="bg-[#f6f1e8] text-left">
+          <thead className="text-left" style={{ backgroundColor: "var(--surface-soft)" }}>
             <tr>
               {head.map((val, idx) => (
                 <th

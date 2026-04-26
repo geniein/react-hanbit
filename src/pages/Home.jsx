@@ -82,8 +82,8 @@ function Home() {
   };
 
   return (
-    <div className="flex w-full flex-col gap-8 lg:gap-10">
-      <section className="relative overflow-hidden rounded-[38px] bg-[#17342a] text-white shadow-[0_34px_100px_rgba(14,31,25,0.22)]">
+    <div className="flex w-full flex-col gap-6 sm:gap-8 lg:gap-10">
+      <section className="relative overflow-hidden rounded-[30px] text-white sm:rounded-[38px]" style={{ background: "linear-gradient(135deg, #009f47 0%, #03c75a 46%, #007a36 100%)", boxShadow: "var(--shadow-strong)" }}>
         <div
           className="absolute inset-0 opacity-25"
           style={{
@@ -92,77 +92,80 @@ function Home() {
             backgroundSize: "cover",
           }}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(216,167,91,0.34),transparent_30%),linear-gradient(135deg,rgba(17,36,29,0.92),rgba(24,59,47,0.84))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_28%),linear-gradient(135deg,rgba(0,93,37,0.3),rgba(3,199,90,0.08))]" />
 
-        <div className="relative grid gap-8 px-6 py-8 sm:px-8 sm:py-10 lg:grid-cols-[1.2fr_0.85fr] lg:px-12 lg:py-12">
+        <div className="relative grid gap-5 px-5 py-6 sm:gap-8 sm:px-8 sm:py-10 lg:grid-cols-[1.2fr_0.85fr] lg:px-12 lg:py-12">
           <div className="flex flex-col justify-between gap-8">
             <div>
-              <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white/72">
+              <div className="font-ui inline-flex rounded-full border border-white/20 bg-white/14 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white/80">
                 Visiting Care Since 2025
               </div>
-              <h2 className="font-display mt-5 max-w-3xl text-[3rem] leading-[0.9] sm:text-[4.2rem] lg:text-[5rem]">
+              <h2 className="font-display mt-4 max-w-3xl text-[2.2rem] leading-[0.92] sm:mt-5 sm:text-[4.2rem] lg:text-[5rem]">
                 익숙한 집에서
                 <br />
                 더 편안한 돌봄을
               </h2>
-              <p className="mt-5 max-w-2xl text-sm leading-8 text-white/74 sm:text-base">
+              <p className="mt-4 max-w-2xl text-[0.95rem] leading-7 text-white/82 sm:mt-5 sm:text-base sm:leading-8">
                 노인장기요양과 방문요양 정보를 차분하게 전달하되, 첫 화면의 인상은 더
                 세련되고 신뢰감 있게 재구성했습니다.
               </p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-[26px] border border-white/12 bg-white/10 px-5 py-5 backdrop-blur">
-                <div className="text-xs uppercase tracking-[0.2em] text-white/50">Core Service</div>
-                <div className="mt-3 text-xl font-semibold">방문요양</div>
+              <div className="rounded-[22px] border border-white/16 bg-white/14 px-4 py-4 backdrop-blur sm:rounded-[26px] sm:px-5 sm:py-5">
+                <div className="font-ui text-xs uppercase tracking-[0.2em] text-white/62">Core Service</div>
+                <div className="mt-2 text-lg font-semibold sm:mt-3 sm:text-xl">방문요양</div>
               </div>
-              <div className="rounded-[26px] border border-white/12 bg-white/10 px-5 py-5 backdrop-blur">
-                <div className="text-xs uppercase tracking-[0.2em] text-white/50">Care Policy</div>
-                <div className="mt-3 text-xl font-semibold">장기요양제도</div>
+              <div className="rounded-[22px] border border-white/16 bg-white/14 px-4 py-4 backdrop-blur sm:rounded-[26px] sm:px-5 sm:py-5">
+                <div className="font-ui text-xs uppercase tracking-[0.2em] text-white/62">Care Policy</div>
+                <div className="mt-2 text-lg font-semibold sm:mt-3 sm:text-xl">장기요양제도</div>
               </div>
-              <div className="rounded-[26px] border border-white/12 bg-white/10 px-5 py-5 backdrop-blur">
-                <div className="text-xs uppercase tracking-[0.2em] text-white/50">Local Access</div>
-                <div className="mt-3 text-xl font-semibold">천안 동남구</div>
+              <div className="rounded-[22px] border border-white/16 bg-white/14 px-4 py-4 backdrop-blur sm:rounded-[26px] sm:px-5 sm:py-5">
+                <div className="font-ui text-xs uppercase tracking-[0.2em] text-white/62">Local Access</div>
+                <div className="mt-2 text-lg font-semibold sm:mt-3 sm:text-xl">천안 동남구</div>
               </div>
             </div>
           </div>
 
-          <div className="glass-panel rounded-[34px] p-3 text-[#17342a]">
+          <div className="glass-panel rounded-[26px] p-3 sm:rounded-[34px]" style={{ color: "var(--ink)" }}>
             <div
-              className="h-56 rounded-[28px] bg-cover bg-center sm:h-72"
+              className="h-48 rounded-[22px] bg-cover bg-center sm:h-72 sm:rounded-[28px]"
               style={{ backgroundImage: `url(${company})` }}
             />
             <div className="px-2 pb-2 pt-5 sm:px-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#7f8f87]">
+              <div className="font-ui text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
                 Hanbit Care Center
               </div>
-              <h3 className="mt-3 font-display text-4xl leading-none">한빛방문요양복지센터</h3>
-              <p className="mt-4 text-sm leading-7 text-[#52635b]">
+              <h3 className="mt-3 font-display text-[2rem] leading-none sm:text-4xl">한빛방문요양복지센터</h3>
+              <p className="mt-4 text-sm leading-7" style={{ color: "var(--muted)" }}>
                 노인장기요양 / 방문요양 안내를 더 보기 쉬운 레이아웃으로 정리했습니다.
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-5 grid gap-2 sm:mt-6 sm:flex sm:flex-wrap sm:gap-3">
                 <a
                   href="tel:0415733355"
-                  className="rounded-full bg-[#17342a] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#295c48]"
+                  className="rounded-2xl px-4 py-3 text-center text-sm font-semibold text-white transition sm:rounded-full"
+                  style={{ backgroundColor: "var(--brand-strong)" }}
                 >
                   전화 상담
                 </a>
                 <a
                   href="sms:01090733343"
-                  className="rounded-full border border-[#d5ccbc] px-4 py-3 text-sm font-semibold text-[#17342a] transition hover:bg-white"
+                  className="rounded-2xl border px-4 py-3 text-center text-sm font-semibold transition hover:bg-white sm:rounded-full"
+                  style={{ borderColor: "color-mix(in oklab, var(--brand-strong) 42%, white)", color: "var(--ink)" }}
                 >
                   문자 문의
                 </a>
                 <button
                   type="button"
                   onClick={copyLink}
-                  className="rounded-full border border-[#d5ccbc] px-4 py-3 text-sm font-semibold text-[#17342a] transition hover:bg-white"
+                  className="rounded-2xl border px-4 py-3 text-center text-sm font-semibold transition hover:bg-white sm:rounded-full"
+                  style={{ borderColor: "color-mix(in oklab, var(--brand-strong) 42%, white)", color: "var(--ink)" }}
                 >
                   링크 공유
                 </button>
               </div>
-              {copied && <div className="mt-3 text-sm text-[#295c48]">현재 페이지 링크를 복사했습니다.</div>}
+              {copied && <div className="mt-3 text-sm" style={{ color: "var(--brand-strong)" }}>현재 페이지 링크를 복사했습니다.</div>}
             </div>
           </div>
         </div>
@@ -179,19 +182,19 @@ function Home() {
           >
             <Link
               to={section.href}
-              className="group relative overflow-hidden rounded-[34px] bg-[#d9d0be] shadow-[0_24px_60px_rgba(18,34,28,0.1)]"
+              className="group relative overflow-hidden rounded-[26px] bg-[#d9d0be] shadow-[0_24px_60px_rgba(18,34,28,0.1)] sm:rounded-[34px]"
             >
               <img
                 src={section.image}
                 alt={section.alt}
-                className="h-full min-h-[280px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                className="h-full min-h-[220px] w-full object-cover transition duration-500 group-hover:scale-[1.03] sm:min-h-[280px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white sm:p-8">
-                <div className="text-xs font-semibold uppercase tracking-[0.22em] text-white/72">
+              <div className="absolute bottom-0 left-0 right-0 p-5 text-white sm:p-8">
+                <div className="font-ui text-xs font-semibold uppercase tracking-[0.22em] text-white/72">
                   {section.kicker}
                 </div>
-                <div className="mt-3 font-display text-4xl leading-none sm:text-5xl">{section.title}</div>
+                <div className="mt-3 font-display text-[2rem] leading-none sm:text-5xl">{section.title}</div>
                 <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold">
                   페이지 보기 <span className="transition group-hover:translate-x-1">→</span>
                 </div>
@@ -207,11 +210,11 @@ function Home() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div className="section-kicker">Social Feed</div>
-            <h3 className="mt-4 font-display text-[2.2rem] leading-none text-[#17342a] sm:text-[2.8rem]">
+            <h3 className="mt-4 font-display text-[2.2rem] leading-none sm:text-[2.8rem]" style={{ color: "var(--ink)" }}>
               한빛 SNS 소식
             </h3>
           </div>
-          <Link to="/article" className="text-sm font-semibold text-[#295c48]">
+          <Link to="/article" className="text-sm font-semibold" style={{ color: "var(--brand-strong)" }}>
             전체 보기 →
           </Link>
         </div>
@@ -236,27 +239,28 @@ function Home() {
           </div>
         </div>
 
-        <div className="rounded-[36px] bg-[#f6f1e8] p-6 shadow-[0_20px_50px_rgba(18,34,28,0.08)] sm:p-8">
+        <div className="rounded-[28px] p-5 sm:rounded-[36px] sm:p-8" style={{ backgroundColor: "var(--surface-soft)", boxShadow: "var(--shadow-soft)" }}>
           <div className="section-kicker">Directions</div>
-          <h3 className="mt-4 font-display text-[2.2rem] leading-none text-[#17342a] sm:text-[2.8rem]">
+          <h3 className="mt-4 font-display text-[2.2rem] leading-none sm:text-[2.8rem]" style={{ color: "var(--ink)" }}>
             오시는 길
           </h3>
-          <div className="mt-6 space-y-5 text-sm leading-8 text-[#47574f] sm:text-base">
+          <div className="mt-6 space-y-5 text-sm leading-8 sm:text-base" style={{ color: "var(--muted)" }}>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7a8b83]">Center Name</div>
-              <div className="mt-1 text-xl font-semibold text-[#17342a]">한빛방문요양복지센터</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: "var(--muted)" }}>Center Name</div>
+              <div className="mt-1 text-xl font-semibold" style={{ color: "var(--ink)" }}>한빛방문요양복지센터</div>
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7a8b83]">Address</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: "var(--muted)" }}>Address</div>
               <div className="mt-1">천안시 동남구 충무로 158-35, 럭스프라자 501호</div>
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7a8b83]">Subway</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: "var(--muted)" }}>Subway</div>
               <div className="mt-1">쌍용역 1번 출구에서 648m (도보10분소요)</div>
             </div>
             <Link
               to="/direction"
-              className="inline-flex rounded-full bg-[#17342a] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#295c48]"
+              className="inline-flex rounded-full px-5 py-3 text-sm font-semibold text-white transition"
+              style={{ backgroundColor: "var(--surface-dark)" }}
             >
               상세 위치 보기
             </Link>

@@ -203,3 +203,379 @@
 - 남은 이슈:
   - `package-lock.json`은 내용 수정 의도 없이 줄바꿈 형식 차이로 변경 표시가 남아 있다.
   - `src/App.css`는 현재 import되지 않는 상태로 남아 있으나, 이번 디자인 변경에는 영향이 없다.
+
+## 2026-04-26 22:55:39 +09:00
+
+- 사용자 요청: `먼저 mcp를 설치했는데 수정하는 과정이 chrome에 보이지 않던데?`
+- 조사한 파일:
+  - `CODEX_WORKLOG.md`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-Content -Raw CODEX_WORKLOG.md`
+  - `Get-Process | Where-Object { $_.ProcessName -like '*node*' -or $_.ProcessName -like '*chrome*' } | Select-Object ProcessName, Id, MainWindowTitle`
+  - `netstat -ano | Select-String ':5173|:4173|:9222'`
+- 변경한 파일:
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - MCP가 설치되어도 왜 Chrome 화면에 자동으로 수정 과정이 보이지 않는지 원인을 구분한다.
+- 수정 후 결과:
+  - `:5173` 포트에서 dev 서버가 실행 중이고 Chrome 연결도 존재함을 확인했다.
+  - 문제는 서버 미실행이 아니라, MCP 설치만으로 기존 사용 중인 Chrome 탭이 자동 연결되거나 편집 장면이 자동 중계되지는 않는 구조라는 점으로 정리했다.
+- 검증 결과:
+  - `netstat` 기준 `TCP [::1]:5173 LISTENING`
+  - Chrome 프로세스가 `5173`에 연결된 상태 존재
+- 남은 이슈:
+  - 현재 Codex 세션이 MCP를 실제로 사용 중인지, 그리고 사용자가 보고 있는 Chrome 탭을 Codex가 제어 중인지 별도로 확인해야 한다.
+
+## 2026-04-26 22:59:26 +09:00
+
+- 사용자 요청: `현재 codex 재기동했기에 MCP 연결 되있는거지?`
+- 조사한 파일:
+  - `CODEX_WORKLOG.md`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - 권한 상승 후 `codex mcp list`
+  - Chrome DevTools MCP `list_pages`
+- 변경한 파일:
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 재기동 이후 현재 세션에서 MCP가 실제로 활성화되었는지 확인한다.
+- 수정 후 결과:
+  - `codex mcp list`에서 `chrome-devtools`가 `enabled`로 표시됨을 확인했다.
+  - Chrome DevTools MCP 도구 호출에 응답이 왔고 현재 `about:blank` 페이지 1개가 선택된 상태임을 확인했다.
+- 검증 결과:
+  - 현재 Codex 세션에서 MCP 설정이 인식되고 있음
+  - 브라우저 도구 호출 가능
+- 남은 이슈:
+  - 아직 사용자가 보고 싶은 `localhost:5173` 페이지를 MCP로 연 상태는 아니므로, 다음 단계에서 해당 페이지를 열어야 한다.
+
+## 2026-04-26 23:02:00 +09:00
+
+- 사용자 요청: `전체적인 색상이 안맞아 탭을 누루면 지정 글자색이랑 똑같아져서 사라진다`
+- 조사한 파일:
+  - `src/components/Header.jsx`
+  - `src/pages/Policy.jsx`
+  - `src/pages/Service.jsx`
+- 실행한 명령:
+  - Chrome DevTools MCP로 `localhost:5173` 페이지 열기
+  - Chrome DevTools MCP로 모바일 뷰포트 전환
+  - Chrome DevTools MCP `take_snapshot`
+  - Chrome DevTools MCP `take_screenshot`
+  - Chrome DevTools MCP로 `한빛 방문요양` 탭 클릭
+  - Chrome DevTools MCP `evaluate_script`로 활성 탭의 실제 계산된 글자색/배경색 확인
+- 변경한 파일:
+  - `src/components/Header.jsx`
+  - `src/pages/Policy.jsx`
+  - `src/pages/Service.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 활성 탭에서 배경색과 글자색이 동일하게 계산되어 텍스트가 사라지는 문제를 먼저 해결한다.
+- 수정 후 결과:
+  - 헤더 탭과 하위 페이지 탭의 active/inactive 색상을 class 의존 대신 inline style로 명시했다.
+  - 활성 상태는 어두운 배경 `#17342a`와 밝은 글자 `#f8f6f1` 조합으로 강제했다.
+- 검증 결과:
+  - Chrome DevTools MCP `evaluate_script` 결과 활성 탭 계산값이 `color: rgb(248, 246, 241)`, `backgroundColor: rgb(23, 52, 42)`로 확인됨
+  - 스크린샷 기준 모바일 헤더 탭 텍스트가 다시 보이도록 수정됨
+- 남은 이슈:
+  - 모바일 레이아웃 자체는 여전히 헤더 폭, 하단 고정바, 섹션 간격 등 추가 조정이 필요하다.
+
+## 2026-04-26 23:11:55 +09:00
+
+- 사용자 요청: `전체적인 배경 느낌을 oklch(62.7% .194 149.214) 이 색상으로 가져가고 싶은데`
+- 조사한 파일:
+  - `src/index.css`
+  - `src/components/Header.jsx`
+  - `src/components/Footer.jsx`
+  - `src/components/FixedButton.jsx`
+  - `src/components/Card.jsx`
+  - `src/components/Contact.jsx`
+  - `src/components/Paragraph.jsx`
+  - `src/components/Table.jsx`
+  - `src/pages/Home.jsx`
+  - `src/pages/Direction.jsx`
+  - `src/pages/Intro.jsx`
+  - `src/pages/Policy.jsx`
+  - `src/pages/Service.jsx`
+  - `src/pages/Article.jsx`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `rg -n "17342a|295c48|f6f1e8|2f473d|2a4037|f8f6f1|7a8b83|7a8d84|52635b|47574f" src`
+  - `Get-Content -Raw -Encoding utf8 src\index.css`
+  - `Get-Content -Raw -Encoding utf8`로 관련 컴포넌트/페이지 현재 내용 재확인
+  - Chrome DevTools MCP로 페이지 reload
+  - Chrome DevTools MCP `take_screenshot`
+  - `npm run lint`
+- 변경한 파일:
+  - `src/index.css`
+  - `src/components/Header.jsx`
+  - `src/components/Footer.jsx`
+  - `src/components/FixedButton.jsx`
+  - `src/components/Card.jsx`
+  - `src/components/Contact.jsx`
+  - `src/components/Paragraph.jsx`
+  - `src/components/Table.jsx`
+  - `src/pages/Home.jsx`
+  - `src/pages/Direction.jsx`
+  - `src/pages/Intro.jsx`
+  - `src/pages/Policy.jsx`
+  - `src/pages/Service.jsx`
+  - `src/pages/Article.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 특정 단일 녹색을 배경 분위기의 중심축으로 삼고, 기존의 짙은 초록/베이지 조합을 같은 계열의 파생색으로 통일한다.
+- 수정 후 결과:
+  - `:root`에 `oklch(62.7% 0.194 149.214)` 기반 테마 변수를 추가하고, 배경 그라데이션과 표면색을 해당 색상 중심으로 재구성했다.
+  - 주요 버튼, 활성 탭, 카드 배지, 하단 CTA, 지도/정보 패널 등이 새 테마 변수를 참조하도록 변경했다.
+  - 브라우저 재로드 후 모바일 기준 배경 전체가 연한 민트-그린 계열로 정리된 것을 확인했다.
+- 검증 결과:
+  - Chrome DevTools MCP 스크린샷으로 새 배경 톤 반영 확인
+  - `npm run lint` 통과
+- 남은 이슈:
+  - 현재는 색감 통일이 우선 반영된 상태이고, 다음 단계로 모바일 레이아웃 밀도와 헤더 스크롤 UI를 정리해야 한다.
+
+## 2026-04-26 23:14:20 +09:00
+
+- 사용자 요청: `오히려너 무이 이상해졌다. 내가 바란건 바탕은 하얀색이 맞는거 같고 해더 부분 같은 것들은 naver.com 느낌의 초록색 이와 유사한 느낌의 UI를 원한다`
+- 조사한 파일:
+  - `src/index.css`
+  - `src/components/Header.jsx`
+  - `src/components/Footer.jsx`
+  - `src/components/Contact.jsx`
+  - `src/pages/Home.jsx`
+  - `https://www.naver.com`
+- 실행한 명령:
+  - 웹으로 `https://www.naver.com` 확인
+  - `npm run lint`
+  - Chrome DevTools MCP `reload`
+  - Chrome DevTools MCP `take_screenshot`
+- 변경한 파일:
+  - `src/index.css`
+  - `src/components/Header.jsx`
+  - `src/components/Footer.jsx`
+  - `src/components/Contact.jsx`
+  - `src/pages/Home.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 배경 전체를 녹색 계열로 두는 방향을 철회하고, 흰 바탕 위에 네이버 계열의 선명한 초록 포인트만 남기도록 재조정한다.
+- 수정 후 결과:
+  - 전역 배경을 다시 흰색 중심으로 되돌리고, 연한 그린 헤이즈 정도만 배경에 남겼다.
+  - 헤더 로고 타이포, 활성 탭, 히어로 영역, 푸터, CTA를 `#03c75a` 계열 초록 중심으로 재구성했다.
+  - 결과적으로 흰 화면 위에 초록 포인트가 살아 있는 구조로 방향을 수정했다.
+- 검증 결과:
+  - Chrome DevTools MCP 스크린샷 기준 흰 바탕 + 초록 헤더 포인트 톤 확인
+  - `npm run lint` 통과
+- 남은 이슈:
+  - 색 방향은 수정됐고, 다음 단계는 모바일 헤더 잘림과 하단 고정바 밀도 조정이다.
+
+## 2026-04-26 23:23:49 +09:00
+
+- 사용자 요청: `UI 배치나 느낌이 아주 좋은것 같다 그런데 색상이 뭔가 어울리지 않는 느낌이 괜찮으면서 색상들이 너무 연하게 들어가서 그런거 같다 진하게 강조를 좀 주는 것도 좋을 것 같다.`
+- 조사한 파일:
+  - `src/index.css`
+  - `src/components/Header.jsx`
+  - `src/components/Card.jsx`
+  - `src/pages/Home.jsx`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-Content -Raw -Encoding utf8 src\index.css`
+  - `Get-Content -Raw -Encoding utf8 src\components\Header.jsx`
+  - `Get-Content -Raw -Encoding utf8 src\pages\Home.jsx`
+  - Chrome DevTools MCP `reload`
+  - Chrome DevTools MCP `take_screenshot`
+  - `npm run lint`
+- 변경한 파일:
+  - `src/index.css`
+  - `src/components/Header.jsx`
+  - `src/components/Card.jsx`
+  - `src/pages/Home.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 현재 UI 배치와 구조는 유지하고, 색과 대비만 더 진하게 조정해 존재감을 높인다.
+- 수정 후 결과:
+  - 전역 변수에서 초록 계열과 그림자 강도를 올리고, muted/ink 대비를 더 선명하게 조정했다.
+  - 헤더 비활성 탭, 히어로 카드, 버튼 보더, 홈 상단 초록 그라데이션을 한 단계 더 진하게 보강했다.
+  - 강조는 살아나되 흰 바탕 구조는 유지하는 방향으로 조정했다.
+- 검증 결과:
+  - Chrome DevTools MCP 스크린샷 기준 상단/CTA/푸터 초록 강조가 더 강하게 반영됨
+  - `npm run lint` 통과
+- 남은 이슈:
+  - 서비스/정책 페이지 하단 CTA와 푸터의 초록 면적이 모바일에서 다소 크게 느껴질 수 있어, 원하면 다음 단계에서 면적은 줄이고 대비만 유지하는 식으로 세밀 조정 가능
+
+## 2026-04-26 23:26:42 +09:00
+
+- 사용자 요청: `폰트는 Naver D2가 좋을것 같다`
+- 조사한 파일:
+  - `src/index.css`
+  - `src/components/Header.jsx`
+  - `src/components/Card.jsx`
+  - `src/components/Contact.jsx`
+  - `src/components/Paragraph.jsx`
+  - `src/pages/Home.jsx`
+  - GitHub `naver/d2codingfont`
+  - GitHub `Joungkyun/font-d2coding`
+- 실행한 명령:
+  - GitHub 검색으로 `naver/d2codingfont` 확인
+  - GitHub 검색으로 웹폰트 저장소 `Joungkyun/font-d2coding` 확인
+  - Chrome DevTools MCP `reload`
+  - Chrome DevTools MCP `take_screenshot`
+  - `npm run lint`
+- 변경한 파일:
+  - `src/index.css`
+  - `src/components/Header.jsx`
+  - `src/components/Card.jsx`
+  - `src/components/Contact.jsx`
+  - `src/components/Paragraph.jsx`
+  - `src/pages/Home.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - D2Coding의 성격이 고정폭 코딩 폰트라는 점을 감안해, 본문 전체가 아니라 UI 포인트 영역에 우선 적용한다.
+- 수정 후 결과:
+  - `@font-face`로 D2Coding 웹폰트를 추가했다.
+  - `font-display`, `font-ui` 클래스에 D2Coding을 연결하고, 헤더 브랜드/탭/섹션 키커/홈 라벨 등에 우선 적용했다.
+  - 본문은 기존 sans 계열을 유지해 가독성을 보존했다.
+- 검증 결과:
+  - Chrome DevTools MCP 스크린샷 기준 헤더와 주요 라벨에 D2Coding 반영 확인
+  - `npm run lint` 통과
+- 남은 이슈:
+  - D2Coding을 본문까지 확장할지는 별도 판단이 필요하다. 현재는 개성은 살리고 가독성 저하는 피하는 타협안으로 적용됨
+
+## 2026-04-26 23:30:46 +09:00
+
+- 사용자 요청: `웹은 괜찮은데 모바일 화면은 너무 최악이다... 어떻게 자연스럽게 조정이 안될까`
+- 조사한 파일:
+  - `src/index.css`
+  - `src/components/Header.jsx`
+  - `src/components/FixedButton.jsx`
+  - `src/components/Contact.jsx`
+  - `src/components/Footer.jsx`
+  - `src/pages/Home.jsx`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-Content -Raw -Encoding utf8`로 관련 파일 재확인
+  - Chrome DevTools MCP로 `390x844` 모바일 뷰 기준 홈 스크린샷 확인
+  - Chrome DevTools MCP로 홈/서비스 페이지 reload 및 스크린샷 재확인
+  - `npm run lint`
+- 변경한 파일:
+  - `src/index.css`
+  - `src/components/Header.jsx`
+  - `src/components/FixedButton.jsx`
+  - `src/components/Contact.jsx`
+  - `src/components/Footer.jsx`
+  - `src/pages/Home.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 데스크톱용 비율을 그대로 축소한 모바일 화면을 모바일 전용 구조로 재배치한다.
+- 수정 후 결과:
+  - 헤더를 모바일에서 세로 구성으로 바꾸고, 스크롤바를 숨겨 가독성을 높였다.
+  - 하단 고정바를 4열 그리드형으로 단순화했다.
+  - `Contact`, `Footer`는 모바일에서 흰 카드 기반으로 바꾸고, 초록 대면적은 데스크톱에서만 유지되도록 조정했다.
+  - 홈 히어로 타이포, 카드 라운드, 버튼, 간격, 이미지 높이를 모바일 기준으로 줄여 밀도를 정상화했다.
+- 검증 결과:
+  - Chrome DevTools MCP 스크린샷 기준 홈/서비스 모바일 화면이 이전보다 자연스럽게 정리됨
+  - `npm run lint` 통과
+- 남은 이슈:
+  - 현재 모바일 방향은 정상화됐고, 남은 건 취향 영역의 세부 미세조정 정도다. 예를 들어 히어로 초록 채도, 하단 바 높이, 탭 간격은 더 줄일 수 있다.
+
+## 2026-04-26 23:32:26 +09:00
+
+- 사용자 요청: `맨 밑 전화 블로그 문자 Top을 내가 아이콘으로 넣어두었었는데 모바일은`
+- 조사한 파일:
+  - `src/components/FixedButton.jsx`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-Content -Raw -Encoding utf8 src\components\FixedButton.jsx`
+  - Chrome DevTools MCP `reload`
+  - Chrome DevTools MCP `take_screenshot`
+  - `npm run lint`
+- 변경한 파일:
+  - `src/components/FixedButton.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 모바일 하단 고정바에도 기존처럼 아이콘을 복원해 시인성과 조작감을 높인다.
+- 수정 후 결과:
+  - 모바일 하단 바의 `전화`, `블로그`, `문자`, `TOP`에 각각 아이콘을 다시 추가했다.
+  - 아이콘 위/텍스트 아래의 2단 구성으로 정리해 기존 의도를 살리면서 현재 레이아웃에도 맞췄다.
+- 검증 결과:
+  - Chrome DevTools MCP 스크린샷 기준 모바일 하단 바 아이콘 복원 확인
+  - `npm run lint` 통과
+- 남은 이슈:
+  - 아이콘 스타일은 복원됐고, 원하면 다음 단계에서 아이콘 크기나 바 높이를 더 촘촘하게 미세 조정할 수 있다.
+
+## 2026-04-26 23:34:53 +09:00
+
+- 사용자 요청: `해더랑 아이콘 풋터는 좋다 절대위치로 그런데 배경의 위치가 해더랑 중첩이 되는데?`
+- 조사한 파일:
+  - `src/components/Layout.jsx`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-Content -Raw -Encoding utf8 src\components\Layout.jsx`
+  - Chrome DevTools MCP `take_screenshot`
+  - Chrome DevTools MCP `reload`
+  - Chrome DevTools MCP `take_screenshot`
+  - `npm run lint`
+- 변경한 파일:
+  - `src/components/Layout.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 모바일에서 2줄 높이로 커진 고정 헤더에 맞게 본문 시작 위치를 더 내려 겹침을 제거한다.
+- 수정 후 결과:
+  - `main`의 모바일 상단 패딩을 `pt-28`에서 `pt-36`으로 늘리고, `sm` 이상에서는 별도 값을 유지하도록 조정했다.
+- 검증 결과:
+  - Chrome DevTools MCP 스크린샷 기준 헤더와 본문 섹션 사이 간격이 확보되어 중첩 해소 확인
+  - `npm run lint` 통과
+- 남은 이슈:
+  - 현재는 겹침이 해소됐고, 다음은 취향에 따라 상단 여백을 1단계 더 줄이거나 늘리는 정도의 미세조정만 남았다.
+
+## 2026-04-26 23:40:16 +09:00
+
+- 사용자 요청: `모바일 해더는 괜찮아졌는데 웹 해더가 이상해졌다`
+- 조사한 파일:
+  - `src/components/Header.jsx`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-Content -Raw -Encoding utf8 src\components\Header.jsx`
+  - Chrome DevTools MCP로 데스크톱 뷰포트 `1440x900` 전환
+  - Chrome DevTools MCP로 홈 화면 이동 및 스크린샷 확인
+  - Chrome DevTools MCP `reload`
+  - Chrome DevTools MCP `take_screenshot`
+  - `npm run lint`
+- 변경한 파일:
+  - `src/components/Header.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 모바일 대응을 위해 세로 구조가 된 헤더를, 데스크톱에서는 다시 가로형 균형 레이아웃으로 복원한다.
+- 수정 후 결과:
+  - 데스크톱에서 로고 영역 폭 제한을 제거하고, 사이트 타이틀 크기를 다시 키웠다.
+  - 내비게이션은 데스크톱에서 우측 정렬과 넉넉한 간격을 가지도록 복원했다.
+  - 모바일 구조는 유지하면서 데스크톱만 자연스럽게 보이도록 분기했다.
+- 검증 결과:
+  - Chrome DevTools MCP 데스크톱 스크린샷 기준 웹 헤더 레이아웃 복원 확인
+  - `npm run lint` 통과
+- 남은 이슈:
+  - 현재 웹/모바일 헤더는 각각 분리 정리된 상태이며, 남은 것은 폰트 크기나 탭 간격에 대한 취향 미세조정 정도다.
+
+## 2026-04-26 23:42:32 +09:00
+
+- 사용자 요청: `모바일 화면에서는 '한빛 방문요양' 이라는 탭을 그냥 안보이게하고 오시는 길까지 보이게 표시해줘`
+- 조사한 파일:
+  - `src/components/Header.jsx`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-Content -Raw -Encoding utf8 src\components\Header.jsx`
+  - Chrome DevTools MCP 모바일 뷰포트 `390x844` 설정
+  - Chrome DevTools MCP `reload`
+  - Chrome DevTools MCP `take_screenshot`
+  - `npm run lint`
+- 변경한 파일:
+  - `src/components/Header.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 모바일에서 첫 탭 `한빛 방문요양`을 숨기고, 나머지 탭 4개가 한 줄에 모두 보이도록 만든다.
+- 수정 후 결과:
+  - 모바일에서 첫 번째 탭은 숨기고, 나머지 탭은 더 작은 글자/간격으로 재배치했다.
+  - `장기요양제도`, `서비스 내용`, `SNS`, `오시는 길`이 한 화면에 모두 보이도록 조정했다.
+- 검증 결과:
+  - Chrome DevTools MCP 스크린샷 기준 모바일 헤더에 `오시는 길`까지 모두 표시됨 확인
+  - `npm run lint` 통과
+- 남은 이슈:
+  - 모바일 헤더는 요구대로 정리됐고, 남은 것은 탭 가로 여백이나 글자 크기에 대한 취향 조정 정도다.

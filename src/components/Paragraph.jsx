@@ -28,10 +28,11 @@ function Paragraph({ type, title, content }) {
         <img
           src={images[content.image]}
           alt={title}
-          className="w-full rounded-[26px] border border-[#e7e0d4] object-cover shadow-[0_20px_44px_rgba(18,34,28,0.09)]"
+          className="w-full rounded-[26px] object-cover shadow-[0_20px_44px_rgba(18,34,28,0.09)]"
+          style={{ border: "1px solid color-mix(in oklab, var(--brand) 20%, white)" }}
         />
         {content.text && (
-          <div className="rich-copy rounded-[22px] bg-[#f6f1e8] px-5 py-4 text-sm text-[#44544c]">
+          <div className="rich-copy rounded-[22px] px-5 py-4 text-sm" style={{ backgroundColor: "var(--surface-soft)", color: "var(--muted)" }}>
             {content.text}
           </div>
         )}
@@ -43,8 +44,8 @@ function Paragraph({ type, title, content }) {
 
   return (
     <section className="section-shell rounded-[32px] p-6 sm:p-8">
-      <div className="section-kicker">Information</div>
-      <h3 className="mt-4 font-display text-[2rem] leading-none text-[#17342a] sm:text-[2.35rem]">
+      <div className="section-kicker font-ui">Information</div>
+      <h3 className="mt-4 font-display text-[2rem] leading-none sm:text-[2.35rem]" style={{ color: "var(--ink)" }}>
         {title}
       </h3>
       <div className="mt-6">{message}</div>
