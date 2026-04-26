@@ -1,27 +1,29 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-function Header() {
+const navItems = [
+  { to: "/intro", label: "한빛 방문요양" },
+  { to: "/policy", label: "장기요양제도" },
+  { to: "/service", label: "서비스 내용" },
+  { to: "/article", label: "SNS" },
+  { to: "/direction", label: "오시는 길" },
+];
 
+function Header() {
   const navRef = useRef(null);
   const location = useLocation();
-
-  // 스크롤 위치 저장용
   const scrollPos = useRef(0);
 
   useEffect(() => {
     const nav = navRef.current;
-    if (!nav) return;
+    if (!nav) return undefined;
 
     const onScroll = () => {
       scrollPos.current = nav.scrollLeft;
     };
 
     nav.addEventListener("scroll", onScroll);
-
-    return () => {
-      nav.removeEventListener("scroll", onScroll);
-    };
+    return () => nav.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
@@ -31,45 +33,42 @@ function Header() {
     }
   }, [location.pathname]);
 
-    return (
-      <header className="bg-green-600 text-white p-4 fixed top-0 left-0 w-full h-16 shadow z-50">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-xl font-bold shrink-0 px-1">
-            <Link to="/" className="hover:underline">한빛방문요양복지센터</Link>
+  return (
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5">
+      <div className="glass-panel mx-auto flex max-w-[1380px] items-center justify-between gap-4 rounded-[28px] px-4 py-3 text-[#17342a] sm:px-6">
+        <Link to="/" className="min-w-0">
+          <div className="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-[#7a8d84]">
+            Premium Care
+          </div>
+          <h1 className="font-display truncate text-[1.6rem] font-semibold leading-none text-[#17342a] sm:text-[2rem]">
+            한빛방문요양복지센터
           </h1>
-          <nav ref={navRef} className="flex flex-row flex-nowrap gap-4 overflow-x-auto">
-            <Link to="/intro"
-                  className={`hover:underline shrink-0 ${
-          location.pathname === '/intro'
-            ? 'text-gray-50 font-bold underline'
-            : ''
-        }`}
-            >한빛 방문요양</Link>
-            <Link to="/policy" className={`hover:underline shrink-0 ${
-          location.pathname === '/policy'
-            ? 'text-gray-50 font-bold underline'
-            : ''
-        }`}>장기요양제도</Link>
-            <Link to="/service" className={`hover:underline shrink-0 ${
-          location.pathname === '/service'
-            ? 'text-gray-50 font-bold underline'
-            : ''
-        }`}>서비스 내용</Link>
-            <Link to="/article" className={`hover:underline shrink-0 ${
-          location.pathname === '/article'
-            ? 'text-gray-50 font-bold underline'
-            : ''
-        }`}>SNS</Link>
-            <Link to="/direction" className={`hover:underline shrink-0 ${
-          location.pathname === '/direction'
-            ? 'text-gray-50 font-bold underline'
-            : ''
-        }`}>오시는 길</Link>
-          </nav>
-        </div>
-      </header>
-    );
-  }
-  
-  export default Header;
-  
+        </Link>
+
+        <nav
+          ref={navRef}
+          className="flex max-w-[60vw] flex-nowrap items-center gap-2 overflow-x-auto pb-1 text-sm sm:max-w-none sm:text-[0.95rem]"
+        >
+          {navItems.map((item) => {
+            const active = location.pathname === item.to;
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`shrink-0 rounded-full px-4 py-2.5 transition ${
+                  active
+                    ? "bg-[#17342a] text-white shadow-lg"
+                    : "bg-white/50 text-[#2f473d] hover:bg-white/80"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+export default Header;

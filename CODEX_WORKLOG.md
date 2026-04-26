@@ -1,0 +1,205 @@
+## 2026-04-26 22:33:35 +09:00
+
+- 사용자 요청: `해당 프로젝트를 codex와 같이 수정해보려고한다. https://github.com/ChromeDevTools/chrome-devtools-mcp 이게 필요할까?`
+- 조사한 파일:
+  - `package.json`
+  - `README.md`
+  - `src/App.jsx`는 미확인, 대신 `src` 전체 파일 목록 확인
+- 실행한 명령:
+  - `Get-ChildItem -Force`
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-Content -Raw package.json`
+  - `Get-Content -Raw README.md`
+  - `Get-ChildItem -Recurse -File src | Select-Object FullName`
+  - `git status --short`
+  - GitHub 저장소 `ChromeDevTools/chrome-devtools-mcp` README 확인
+- 변경한 파일:
+  - `CODEX_WORKLOG.md` 생성
+- 수정 전 의도:
+  - 작업 기록 의무를 충족하고, 현재 프로젝트가 `chrome-devtools-mcp`를 필요로 하는 유형인지 판단하기 위한 근거를 남긴다.
+- 수정 후 결과:
+  - React/Vite 기반 프런트엔드 프로젝트임을 확인했고, 초기 판단에 필요한 로그 파일을 생성했다.
+- 검증 결과:
+  - 프로젝트 루트에 `CODEX_WORKLOG.md`가 생성되도록 패치 적용
+  - 작업 트리는 기존에 깨끗한 상태였음
+  - 공식 저장소 설명상 해당 도구는 에이전트가 Chrome 브라우저를 제어하고 DevTools 정보를 읽기 위한 MCP 서버임을 확인
+- 남은 이슈:
+  - 실제 브라우저 상호작용 자동화, 성능 추적, DOM/네트워크 디버깅까지 Codex에 맡길지에 따라 `chrome-devtools-mcp` 도입 여부가 달라진다.
+
+## 2026-04-26 22:34:00 +09:00
+
+- 사용자 요청: `라이브로 수정하는 것을 보고 싶다`
+- 조사한 파일:
+  - 기존 조사 결과 재사용
+- 실행한 명령:
+  - 없음
+- 변경한 파일:
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 라이브 수정 요구에 대한 판단과 다음 작업 방식을 기록한다.
+- 수정 후 결과:
+  - 실시간 반영이 필요한 경우의 권장 도구 구성을 정리할 준비를 마쳤다.
+- 검증 결과:
+  - 작업 로그 갱신 완료
+- 남은 이슈:
+  - 브라우저를 사용자가 직접 보며 확인할지, Codex가 브라우저까지 제어하게 할지 결정 필요
+
+## 2026-04-26 22:38:03 +09:00
+
+- 사용자 요청: `MCP부터 연결해보자`
+- 조사한 파일:
+  - `C:\Users\genie\.codex\config.toml`
+  - `C:\Users\genie\.codex\skills\.system\openai-docs\SKILL.md`
+  - OpenAI Codex 공식 문서 `https://developers.openai.com/codex/mcp`
+  - OpenAI Codex 공식 문서 `https://developers.openai.com/codex/config-reference`
+  - OpenAI Codex 공식 문서 `https://developers.openai.com/codex/config-sample`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-ChildItem -Force E:\dev\react-hanbit`
+  - `Get-ChildItem -Force C:\Users\genie\.codex`
+  - `Get-Content -Raw C:\Users\genie\.codex\config.toml`
+  - `Get-ChildItem -Force C:\Users\genie\.codex\rules`
+  - `rg -n "mcp|mcp_servers|mcpServers" C:\Users\genie\.codex`
+  - `node -v`
+  - `npm -v`
+  - `codex mcp --help`
+  - `codex mcp add --help`
+  - `codex mcp list`
+  - `npx -y chrome-devtools-mcp@latest --help`
+  - `Get-ChildItem -Force .codex`
+  - 권한 상승 후 `npx -y chrome-devtools-mcp@latest --help`
+  - 권한 상승 후 `codex mcp list`
+- 변경한 파일:
+  - `.codex/config.toml` 생성
+  - `CODEX_WORKLOG.md` 갱신
+- 수정 전 의도:
+  - 전역 Codex 설정을 건드리지 않고, 현재 프로젝트에만 적용되는 MCP 설정을 추가한다.
+  - 라이브 브라우저 확인 목적에 맞게 headless 없이 Chrome DevTools MCP를 연결한다.
+- 수정 후 결과:
+  - 프로젝트 전용 설정 파일 `.codex/config.toml`에 `chrome-devtools` MCP 서버를 추가했다.
+  - `npx` 기반 실행 구성이 가능함을 확인했고, `codex mcp list`에서 `chrome-devtools`가 `enabled`로 표시되는 것을 확인했다.
+  - 기본 사용 통계 수집은 `--no-usage-statistics` 인자로 비활성화했다.
+- 검증 결과:
+  - 공식 문서상 trusted project에서는 `.codex/config.toml`에 `[mcp_servers.<name>]` 형식으로 MCP 서버를 둘 수 있음을 확인
+  - 권한 상승 후 `npx -y chrome-devtools-mcp@latest --help` 정상 출력
+  - 권한 상승 후 `codex mcp list` 결과: `chrome-devtools  npx  -y chrome-devtools-mcp@latest  ...  enabled`
+- 남은 이슈:
+  - 현재 실행 중인 Codex 세션이 새 MCP 설정을 즉시 반영하는지 여부는 별개이므로, 필요 시 Codex 재시작이 필요할 수 있다.
+  - 다음 단계로 `npm run dev`를 띄우고 Chrome 탭을 열어 실제 라이브 수정 루프를 시작해야 한다.
+
+## 2026-04-26 22:41:37 +09:00
+
+- 사용자 요청: `이제 어떻게 실행하면 될까`
+- 조사한 파일:
+  - `.codex/config.toml`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-Content -Raw .codex\config.toml`
+- 변경한 파일:
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 사용자가 바로 실행할 수 있도록 현재 MCP 설정 기준의 실제 실행 순서를 문서화한다.
+- 수정 후 결과:
+  - Codex 재시작, 개발 서버 실행, 브라우저 확인 순서로 안내할 준비를 마쳤다.
+- 검증 결과:
+  - 프로젝트 로컬 MCP 설정이 `.codex/config.toml`에 정상 존재함을 재확인
+- 남은 이슈:
+  - 사용자가 Codex를 재시작한 뒤 현재 세션에서 MCP가 실제로 붙었는지 확인해야 한다.
+
+## 2026-04-26 22:44:11 +09:00
+
+- 사용자 요청: `해당 웹이 너무 디자인 옛날 같다 컨텐츠는 그대로 유지하데 디자인을 최신식으로 변경해줘`
+- 조사한 파일:
+  - `src/App.jsx`
+  - `src/App.css`
+  - `src/index.css`
+  - `src/main.jsx`
+  - `src/data.json`
+  - `src/components/Layout.jsx`
+  - `src/components/Header.jsx`
+  - `src/components/Footer.jsx`
+  - `src/components/Card.jsx`
+  - `src/components/Paragraph.jsx`
+  - `src/components/Table.jsx`
+  - `src/components/SubHeader.jsx`
+  - `src/components/Contact.jsx`
+  - `src/components/FixedButton.jsx`
+  - `src/components/Map.jsx`
+  - `src/pages/Home.jsx`
+  - `src/pages/Intro.jsx`
+  - `src/pages/Policy.jsx`
+  - `src/pages/Service.jsx`
+  - `src/pages/Article.jsx`
+  - `src/pages/Direction.jsx`
+- 실행한 명령:
+  - `Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz'`
+  - `Get-Content -Raw src\App.jsx`
+  - `Get-Content -Raw src\App.css`
+  - `Get-Content -Raw src\index.css`
+  - `Get-ChildItem -Recurse -File src\components,src\pages | Select-Object FullName`
+  - `Get-Content -Raw src\components\Layout.jsx`
+  - `Get-Content -Raw src\components\Header.jsx`
+  - `Get-Content -Raw src\components\Footer.jsx`
+  - `Get-Content -Raw src\pages\Home.jsx`
+  - `Get-Content -Raw src\components\Card.jsx`
+  - `Get-Content -Raw src\components\SubHeader.jsx`
+  - `Get-Content -Raw src\components\Paragraph.jsx`
+  - `Get-Content -Raw src\components\Table.jsx`
+  - `Get-Content -Raw src\components\Contact.jsx`
+  - `Get-Content -Raw src\components\FixedButton.jsx`
+  - `Get-Content -Raw src\pages\Intro.jsx`
+  - `Get-Content -Raw src\pages\Policy.jsx`
+  - `Get-Content -Raw src\pages\Service.jsx`
+  - `Get-Content -Raw src\pages\Direction.jsx`
+  - `Get-Content -Raw -Encoding utf8 src\components\Header.jsx`
+  - `Get-Content -Raw -Encoding utf8 src\pages\Home.jsx`
+  - `Get-Content -Raw -Encoding utf8 src\pages\Article.jsx`
+  - `Get-Content -Raw -Encoding utf8 src\components\Map.jsx`
+  - `Get-Content -Raw -Encoding utf8 src\pages\Direction.jsx`
+  - `Get-Content -Raw -Encoding utf8 src\main.jsx`
+  - `Get-Content -Raw -Encoding utf8 package.json`
+  - `npm run build`
+  - `npm run lint`
+  - 권한 상승 후 `npm run build`
+  - `git status --short`
+  - `Get-ChildItem -Recurse -File src | Select-Object FullName`
+  - `git diff -- package-lock.json`
+  - `git diff -- src\pages\Home.jsx src\components\Header.jsx src\index.css`
+  - `Select-String -Path package-lock.json -Pattern 'node_modules/yocto-queue' -Context 20,2`
+  - `Select-String -Path package-lock.json -Pattern 'node_modules/yaml' -Context 2,12`
+  - `git diff --stat`
+- 변경한 파일:
+  - `src/index.css`
+  - `src/components/Layout.jsx`
+  - `src/components/Header.jsx`
+  - `src/components/Footer.jsx`
+  - `src/components/Card.jsx`
+  - `src/components/Paragraph.jsx`
+  - `src/components/Table.jsx`
+  - `src/components/SubHeader.jsx`
+  - `src/components/Contact.jsx`
+  - `src/components/FixedButton.jsx`
+  - `src/components/Map.jsx`
+  - `src/pages/Home.jsx`
+  - `src/pages/Intro.jsx`
+  - `src/pages/Policy.jsx`
+  - `src/pages/Service.jsx`
+  - `src/pages/Article.jsx`
+  - `src/pages/Direction.jsx`
+  - `CODEX_WORKLOG.md`
+- 수정 전 의도:
+  - 기존 콘텐츠와 정보 구조는 유지하되, 첫 화면과 공용 컴포넌트를 전면 리디자인해서 사이트 전체 인상을 최신식으로 바꾼다.
+  - 색상, 타이포그래피, 카드, CTA, 네비게이션, 섹션 레이아웃을 공통 시스템으로 정리한다.
+- 수정 후 결과:
+  - 글로벌 스타일에 새로운 색상 변수, 그리드 배경, 글래스 패널, 디스플레이 타이포그래피를 추가했다.
+  - 헤더를 고정형 글래스 내비게이션으로 바꾸고, 푸터와 플로팅 버튼도 같은 톤으로 정리했다.
+  - 홈 화면을 대형 히어로, 편집형 섹션, SNS 카드, 지도/주소 패널 구조로 재배치했다.
+  - Intro, Policy, Service, Article, Direction 페이지도 새 디자인 시스템에 맞춰 일관된 섹션형 레이아웃으로 맞췄다.
+  - `Map.jsx`는 `window.naver`와 `useRef`를 사용하도록 정리해 lint 오류를 제거했다.
+- 검증 결과:
+  - `npm run lint` 통과
+  - 권한 상승 후 `npm run build` 통과
+  - 기존 샌드박스 환경에서는 `vite build`가 `esbuild spawn EPERM`으로 실패했으나 권한 상승 후 정상 빌드됨
+- 남은 이슈:
+  - `package-lock.json`은 내용 수정 의도 없이 줄바꿈 형식 차이로 변경 표시가 남아 있다.
+  - `src/App.css`는 현재 import되지 않는 상태로 남아 있으나, 이번 디자인 변경에는 영향이 없다.

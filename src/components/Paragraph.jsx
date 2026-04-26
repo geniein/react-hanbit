@@ -1,53 +1,55 @@
-import limit from '../assets/limit.jpeg';
-import logo from '../assets/logo.jpeg';
-import process from '../assets/process.gif';
-import nursing from '../assets/nursing.jpeg';
-import nonbenefit from '../assets/nonbenefit.jpeg'
-import intro1 from '../assets/intro1.jpeg'
-import intro2 from '../assets/intro2.jpeg'
-import Table from './Table';
+import intro1 from "../assets/intro1.jpeg";
+import intro2 from "../assets/intro2.jpeg";
+import limit from "../assets/limit.jpeg";
+import logo from "../assets/logo.jpeg";
+import nonbenefit from "../assets/nonbenefit.jpeg";
+import nursing from "../assets/nursing.jpeg";
+import process from "../assets/process.gif";
+import Table from "./Table";
 
 function Paragraph({ type, title, content }) {
+  const images = {
+    logo,
+    limit,
+    process,
+    nursing,
+    nonbenefit,
+    intro1,
+    intro2,
+  };
 
-    const images = {
-        logo: logo,
-        limit: limit,
-        process: process,
-        nursing: nursing,
-        nonbenefit: nonbenefit,
-        intro1: intro1,
-        intro2: intro2
-      };
+  let message = null;
 
-    let message;
-    if (type === 'text') {
-        message = (
-        <>
-            <pre className="whitespace-pre-wrap break-words">{content}</pre>
-        </>
+  if (type === "text") {
+    message = <pre className="rich-copy font-sans">{content}</pre>;
+  } else if (type === "image") {
+    message = (
+      <div className="space-y-4">
+        <img
+          src={images[content.image]}
+          alt={title}
+          className="w-full rounded-[26px] border border-[#e7e0d4] object-cover shadow-[0_20px_44px_rgba(18,34,28,0.09)]"
+        />
+        {content.text && (
+          <div className="rich-copy rounded-[22px] bg-[#f6f1e8] px-5 py-4 text-sm text-[#44544c]">
+            {content.text}
+          </div>
+        )}
+      </div>
     );
-    } else if(type === 'image'){
-        message = (
-        <>
-            <img src={images[content.image]} className='w-full h-auto'/>
-            {content.text && <div> {content.text}</div>}
-        </>
-        );
-        
-    }else if(type=== 'table'){
-        message = <Table head={content.head} body={content.body}/>
-    }else{
-        message = ""
-    }
-    return (      
-        <div className="container mx-auto flex-col">
-            <div className="font-bold my-4 text-xl text-green-600">
-            ◎ {title}
-            </div>
-            {message}
-        </div>      
-    );
+  } else if (type === "table") {
+    message = <Table head={content.head} body={content.body} />;
   }
-  
-  export default Paragraph;
-  
+
+  return (
+    <section className="section-shell rounded-[32px] p-6 sm:p-8">
+      <div className="section-kicker">Information</div>
+      <h3 className="mt-4 font-display text-[2rem] leading-none text-[#17342a] sm:text-[2.35rem]">
+        {title}
+      </h3>
+      <div className="mt-6">{message}</div>
+    </section>
+  );
+}
+
+export default Paragraph;
