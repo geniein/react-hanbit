@@ -11,7 +11,7 @@ function Footer() {
         </div>
         <img src={logo} alt="한빛방문요양복지센터 로고" className="h-16 w-auto rounded-2xl object-cover" />
       </div>
-      <div className="border-t border-zinc-100 px-4 py-4 text-center text-xs text-zinc-500">
+      <div className="border-t border-zinc-100 px-4 py-4 text-center text-sm text-zinc-500">
         © 2026 한빛방문요양복지센터. All rights reserved.
       </div>
     </footer>

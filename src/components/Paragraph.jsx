@@ -21,12 +21,12 @@ function Paragraph({ type, title, content }) {
   let message = null;
 
   if (type === "text") {
-    message = <p className="whitespace-pre-wrap text-base leading-8 text-zinc-700">{content}</p>;
+    message = <p className="whitespace-pre-wrap text-[17px] leading-8 text-zinc-700 sm:text-lg sm:leading-9">{content}</p>;
   } else if (type === "image") {
     message = (
       <figure className="overflow-hidden rounded-[2rem] bg-white shadow-sm ring-1 ring-zinc-200/70">
         <img src={images[content.image]} alt={title || "센터 이미지"} className="h-auto w-full object-cover" />
-        {content.text && <figcaption className="p-6 text-base leading-8 text-zinc-700">{content.text}</figcaption>}
+        {content.text && <figcaption className="p-6 text-[17px] leading-8 text-zinc-700 sm:text-lg sm:leading-9">{content.text}</figcaption>}
       </figure>
     );
   } else if (type === "table") {
@@ -36,7 +36,7 @@ function Paragraph({ type, title, content }) {
   return (
     <section className="mb-10">
       {title && (
-        <h2 className="mb-5 text-2xl font-semibold tracking-tight text-zinc-950 sm:text-3xl">
+        <h2 className="mb-5 text-[1.5rem] font-semibold tracking-tight text-zinc-950 min-[390px]:text-2xl sm:text-3xl">
           {title}
         </h2>
       )}

@@ -35,7 +35,7 @@ function FixedButton() {
         </button>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-white/70 bg-white/85 text-xs font-semibold text-zinc-700 shadow-2xl backdrop-blur-xl sm:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-white/70 bg-white/85 text-sm font-semibold text-zinc-700 shadow-2xl backdrop-blur-xl sm:hidden">
         {actions.map((action) => (
           <a key={action.label} href={action.href} className="flex flex-col items-center gap-1 px-2 py-3">
             <svg viewBox="0 0 24 24" fill="currentColor" className="size-5" aria-hidden="true">

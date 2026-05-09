@@ -59,10 +59,10 @@ function Home() {
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-200">Hanbit Care Center</p>
-            <h2 className="mt-4 max-w-2xl text-4xl font-semibold tracking-tight sm:text-6xl">
+            <h2 className="mt-4 max-w-2xl text-[2rem] font-semibold tracking-tight min-[390px]:text-4xl sm:text-6xl">
               한빛방문요양복지센터
             </h2>
-            <p className="mt-5 max-w-xl text-lg leading-8 text-zinc-100">
+            <p className="mt-5 max-w-xl text-[17px] leading-8 text-zinc-100 min-[390px]:text-lg sm:leading-9">
               어르신의 일상과 가족의 마음을 함께 살피는 천안 방문요양 전문 센터입니다.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -83,8 +83,8 @@ function Home() {
             <div className="grid grid-cols-3 gap-2 p-2">
               {highlights.map((item) => (
                 <div key={item.label} className="rounded-2xl bg-white/90 p-4 text-zinc-950">
-                  <div className="text-xs text-zinc-500">{item.label}</div>
-                  <div className="mt-1 text-sm font-semibold sm:text-base">{item.value}</div>
+                  <div className="text-sm text-zinc-500">{item.label}</div>
+                  <div className="mt-1 text-[15px] font-semibold sm:text-base">{item.value}</div>
                 </div>
               ))}
             </div>
@@ -129,10 +129,10 @@ function Home() {
           </div>
           <div className="p-6 sm:p-8">
             <p className="text-sm font-semibold text-emerald-600">한빛방문요양복지센터</p>
-            <p className="mt-2 text-xl font-semibold tracking-tight text-zinc-950">
+            <p className="mt-2 text-[1.25rem] font-semibold tracking-tight text-zinc-950 min-[390px]:text-2xl">
               천안시 동남구 충무로 158-35, 501호
             </p>
-            <p className="mt-2 text-zinc-600">쌍용역 1번 출구에서 약 648m, 도보 약 10분</p>
+            <p className="mt-2 text-[17px] leading-8 text-zinc-600">쌍용역 1번 출구에서 약 648m, 도보 약 10분</p>
           </div>
         </div>
       </section>
@@ -143,7 +143,7 @@ function Home() {
 function SectionTitle({ title, to }) {
   return (
     <div className="mb-6 flex items-end justify-between gap-4">
-      <h2 className="text-3xl font-semibold tracking-tight text-zinc-950">{title}</h2>
+      <h2 className="text-[1.75rem] font-semibold tracking-tight text-zinc-950 min-[390px]:text-3xl">{title}</h2>
       <Link to={to} className="shrink-0 rounded-full bg-white px-4 py-2 text-sm font-semibold text-emerald-600 shadow-sm ring-1 ring-zinc-200/70">
         자세히 보기
       </Link>

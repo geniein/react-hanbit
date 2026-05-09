@@ -2,7 +2,7 @@ function Table({ head, body }) {
   return (
     <div className="overflow-hidden rounded-[1.5rem] bg-white shadow-sm ring-1 ring-zinc-200/70">
       <div className="overflow-x-auto">
-        <table className="min-w-full text-sm">
+        <table className="min-w-full text-[15px] sm:text-base">
           <thead className="bg-zinc-950 text-white">
             <tr>
               {head.map((val, idx) => (

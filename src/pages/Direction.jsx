@@ -5,8 +5,8 @@ function Direction() {
     <div>
       <section className="mb-8 rounded-[2.5rem] bg-white p-8 shadow-sm ring-1 ring-zinc-200/70 sm:p-12">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">Location</p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">오시는 길</h1>
-        <p className="mt-4 max-w-2xl text-lg leading-8 text-zinc-600">
+        <h1 className="mt-3 text-[2rem] font-semibold tracking-tight text-zinc-950 min-[390px]:text-4xl sm:text-5xl">오시는 길</h1>
+        <p className="mt-4 max-w-2xl text-[17px] leading-8 text-zinc-600 min-[390px]:text-lg sm:leading-9">
           방문 상담이 필요하시면 전화로 먼저 예약해 주세요.
         </p>
       </section>
@@ -18,10 +18,10 @@ function Direction() {
         <div className="grid gap-4 p-6 sm:grid-cols-[1fr_auto] sm:p-8">
           <div>
             <p className="text-sm font-semibold text-emerald-600">한빛방문요양복지센터</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">
+            <h2 className="mt-2 text-[1.375rem] font-semibold tracking-tight text-zinc-950 min-[390px]:text-2xl">
               천안시 동남구 충무로 158-35, 501호
             </h2>
-            <p className="mt-2 text-zinc-600">쌍용역 1번 출구에서 약 648m, 도보 약 10분</p>
+            <p className="mt-2 text-[17px] leading-8 text-zinc-600">쌍용역 1번 출구에서 약 648m, 도보 약 10분</p>
           </div>
           <a
             href="tel:0415733355"

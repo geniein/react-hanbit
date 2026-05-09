@@ -9,12 +9,12 @@ function Card({ title, description, pubDate, link }) {
         rel="noopener noreferrer"
         className="group flex h-full min-h-56 flex-col rounded-[1.75rem] bg-white p-6 shadow-sm ring-1 ring-zinc-200/70 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-zinc-950/10"
       >
-        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-600">Naver Blog</div>
+        <div className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-600">Naver Blog</div>
         <h3 className="mt-4 line-clamp-2 text-lg font-semibold tracking-tight text-zinc-950 group-hover:text-emerald-600">
           {title}
         </h3>
         <p
-          className="mt-3 line-clamp-4 text-sm leading-6 text-zinc-600"
+          className="mt-3 line-clamp-4 text-[16px] leading-7 text-zinc-600"
           dangerouslySetInnerHTML={{
             __html: description?.replace(/img/g, 'img referrerpolicy="no-referrer"') ?? "",
           }}
