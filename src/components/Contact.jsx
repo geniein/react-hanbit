@@ -1,14 +1,20 @@
 function Contact() {
-    return (      
-        <div className="flex w-full h-20 p-20 text-white divide-x divide-gray-300">
-            <a className="flex-1 bg-green-700 flex h-20 text-center justify-center items-center hover:cursor-pointer rounded-full"
-                href="tel:0415733355">상담전화</a>
-            <div className="w-4"></div>      
-            <a className="flex-1 bg-green-700 flex h-20 text-center justify-center items-center hover:cursor-pointer rounded-full"
-                href="tel:01090733343">휴대전화</a>
-        </div>      
-    );
-  }
-  
-  export default Contact;
-  
+  return (
+    <div className="my-12 grid gap-3 rounded-[2rem] bg-zinc-950 p-4 text-white shadow-2xl shadow-zinc-950/10 sm:grid-cols-2 sm:p-5">
+      <a
+        className="flex min-h-16 items-center justify-center rounded-full bg-white px-6 text-center font-semibold text-zinc-950 transition hover:bg-emerald-50"
+        href="tel:0415733355"
+      >
+        센터 상담전화
+      </a>
+      <a
+        className="flex min-h-16 items-center justify-center rounded-full bg-emerald-600 px-6 text-center font-semibold text-white transition hover:bg-emerald-500"
+        href="tel:01090733343"
+      >
+        휴대전화 연결
+      </a>
+    </div>
+  );
+}
+
+export default Contact;

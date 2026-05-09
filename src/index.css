@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+      "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+    background: #f5f5f7;
+  }
+
+  ::selection {
+    background: #16a34a;
+    color: white;
+  }
+}

@@ -1,37 +1,46 @@
-import { useState } from 'react';
-import Paragraph from "../components/Paragraph";
-import Layout from "../components/Layout";
-import SubHeader from "../components/SubHeader";
+import { useState } from "react";
 import Contact from "../components/Contact";
-import data from '../data.json';
+import Paragraph from "../components/Paragraph";
+import SubHeader from "../components/SubHeader";
+import data from "../data.json";
 
-function Serivce() {
-    const [page, setPage] = useState("nursing");
-    const dataNursing = data.nursing;
-    const dataNonbenefit = data.nonbenefit;
+function Service() {
+  const [page, setPage] = useState("nursing");
+  const items = page === "nursing" ? data.nursing : data.nonbenefit;
 
-    function onClickSubHeader(target){
-        setPage(target);
-    }
   return (
     <div>
-        <SubHeader>
-            <div className={`text-xl font-bold m-4 ${page==="nursing" ? "underline": ""}`} onClick={()=>onClickSubHeader("nursing")}>방문요양</div>          
-            <div className={`text-xl font-bold m-4 ${page==="nonbenefit" ? "underline": ""}`} onClick={()=>onClickSubHeader("nonbenefit")}>비급여 서비스</div>          
-        </SubHeader>
-        <div>
-            <h3 className="font-bold my-4 text-2xl inline-block; relative">
-                {page=="nursing" ? "방문요양" : "비급여 서비스" }
-                <span className="absolute left-0 -bottom-1 w-full h-px bg-green-700"></span>
-            </h3> 
-            
-            {page =="nursing" && dataNursing.map((val)=><Paragraph type={val.type} title={val.title} content={val.content}/>)}
-            {page =="nonbenefit" && dataNonbenefit.map((val)=><Paragraph type={val.type} title={val.title} content={val.content}/>)}
+      <section className="mb-8 rounded-[2.5rem] bg-white p-8 shadow-sm ring-1 ring-zinc-200/70 sm:p-12">
+        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">Service</p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
+          서비스 안내
+        </h1>
+        <p className="mt-4 max-w-2xl text-lg leading-8 text-zinc-600">
+          방문요양과 비급여 서비스를 어르신의 생활 리듬에 맞춰 제공합니다.
+        </p>
+      </section>
 
-            <Contact/>
-        </div>
+      <SubHeader>
+        <button className={tabClass(page === "nursing")} onClick={() => setPage("nursing")} type="button">
+          방문요양
+        </button>
+        <button className={tabClass(page === "nonbenefit")} onClick={() => setPage("nonbenefit")} type="button">
+          비급여 서비스
+        </button>
+      </SubHeader>
+
+      {items.map((val, index) => (
+        <Paragraph key={`${val.title}-${index}`} {...val} />
+      ))}
+      <Contact />
     </div>
   );
 }
 
-export default Serivce;
+function tabClass(active) {
+  return `flex-1 rounded-full px-4 py-3 text-sm font-semibold transition sm:text-base ${
+    active ? "bg-zinc-950 text-white shadow-sm" : "text-zinc-600 hover:bg-white hover:text-zinc-950"
+  }`;
+}
+
+export default Service;

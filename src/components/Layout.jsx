@@ -1,17 +1,17 @@
-import Header from "./Header";
-import Footer from "./Footer";
-import FixedButton from "./FixedButton";
 import { Outlet } from "react-router-dom";
+import FixedButton from "./FixedButton";
+import Footer from "./Footer";
+import Header from "./Header";
 
-function Layout({ children }) {
+function Layout() {
   return (
-    <div className="flex flex-col">
+    <div className="min-h-screen bg-[#f5f5f7] text-zinc-950 antialiased">
       <Header />
-      <main className="flex-grow container mx-auto p-4 pt-16">
-        <Outlet/>
+      <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-20 sm:px-6 sm:pb-20">
+        <Outlet />
       </main>
       <Footer />
-      <FixedButton/>
+      <FixedButton />
     </div>
   );
 }
